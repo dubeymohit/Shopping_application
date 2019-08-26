@@ -1,4 +1,4 @@
-You need to create a console based (Menu-driven) Shopping Cart application using core python.
+Console based (Menu-driven) Shopping Cart application using core python.
 
 Specification:
 
