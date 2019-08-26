@@ -1,9 +1,7 @@
 # Take shopping details and store then in database.
 
-from database.config import session as db_session
 from database.product import Product
 from database.customer import Customer
-# from shopping_cart.user import User
 
 
 class CustomerActions:
@@ -19,7 +17,13 @@ class CustomerActions:
         print(" 1. Browse all products. \n 2. Add Item to cart. \n 3. Add item to wise list. "
               "\n 4. Remove product from cart. \n 5. Remove product from wise list. \n 6. View order history "
               "\n 7. Exit.")
-        choice = int(input("Enter your choice: "))
+        choice = 0
+        while True:
+            try:
+                choice = int(input("Enter your choice: "))
+                break
+            except ValueError:
+                print("Entered choice is invalid, Please select given options")
 
         if choice == 1:
             CustomerActions.browse_product()
@@ -47,27 +51,32 @@ class CustomerActions:
     @staticmethod
     def add_product_to_cart():
         """ Add new product to the customer cart """
-        pass
+        print("Work is in progress")
+        CustomerActions.customer_action()
 
     @staticmethod
     def remove_product_from_cart():
         """ Remove product from customer cart """
-        pass
+        print("Work is in progress")
+        CustomerActions.customer_action()
 
     @staticmethod
     def add_product_to_wish_list():
         """ Add new product to the customer wish list """
-        pass
+        print("Work is in progress")
+        CustomerActions.customer_action()
 
     @staticmethod
     def remove_product_from_wish_list():
         """ Remove product from customer wise list"""
-        pass
+        print("Work is in progress")
+        CustomerActions.customer_action()
 
     @staticmethod
     def view_order_history():
         """ View order history of customer """
-        pass
+        print("Work is in progress")
+        CustomerActions.customer_action()
 
     @staticmethod
     def delete_account():
@@ -80,4 +89,5 @@ class CustomerActions:
 
     @staticmethod
     def edit_account():
-        """ """
+        """ Customer can edit account information """
+        pass

@@ -4,8 +4,6 @@ from sqlalchemy import (
         String,
         Numeric,
     )
-# from sqlalchemy.orm import relationship
-# from database.product_list import Product
 from database.config import Base, session as db_session
 
 
@@ -18,9 +16,6 @@ class Customer(Base):
     email_id = Column(String, nullable=False, unique=True)
     password = Column(String, nullable=False)
     mobile_number = Column(Numeric(10), nullable=False, unique=True)
-
-    def __init__(self):
-        pass
 
     def add_customer(self, name, email_id, password, mobile_number):
         self.name = name

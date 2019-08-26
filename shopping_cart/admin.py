@@ -7,21 +7,20 @@ from pandas import read_sql
 
 class AdminActions:
 
-    def __init__(self):
-        pass
-
     @staticmethod
     def admin_action():
         """ Admin can perform the following task """
         print("\n------------------------------------------------------------------------------------")
         print("Select any one option: ")
         print(" 1. Add new Product. \n 2. Delete any existing product. \n 3. Edit any existing item. "
-              "\n 4. Browse all products \n 5. Browse all customer account. \n 6. Exit.")
+              "\n 4. Browse all products. \n 5. Browse all customer account. \n 6. Exit.")
         choice = 0
-        try:
-            choice = int(input("Enter your choice: "))
-        except ValueError as ve:
-            print(ve)
+        while True:
+            try:
+                choice = int(input("Enter your choice: "))
+                break
+            except ValueError:
+                print("Entered choice is invalid, Please select given options")
 
         if choice == 1:
             AdminActions.add_product()
@@ -32,7 +31,7 @@ class AdminActions:
         elif choice == 4:
             AdminActions.browse_product()
         elif choice == 5:
-            pass
+            AdminActions.browse_customer()
         elif choice == 6:
             exit()
         else:
@@ -69,6 +68,12 @@ class AdminActions:
 
     @staticmethod
     def browse_customer():
-        customer = read_sql("SELECT * from customer", connect)
-        print(customer)
+        df = read_sql("SELECT * from customer", connect)
+        if df.empty:
+            print("Customers are not available now")
+            AdminActions.admin_action()
+        else:
+            print(df)
+            AdminActions.admin_action()
+        db_session.close()
 

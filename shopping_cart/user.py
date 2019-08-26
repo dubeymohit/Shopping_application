@@ -6,7 +6,7 @@ from database.config import session
 from database.customer import Customer
 from shopping_cart.admin import AdminActions
 from shopping_cart.customer import CustomerActions
-# from getpass import getpass
+from shopping_cart.validate import validate_password, validate_email
 
 
 class User:
@@ -37,27 +37,56 @@ class User:
         """ Add new user/customer """
         name = input("Enter your name: ")
         email_id = input("Enter email id: ")
-        try:
-            email = session.query(Customer).filter(Customer.email_id == email_id).one()
-        except NoResultFound:
-            pass
+        # Validate Email id
+        while True:
+            if not validate_email(email_id):
+                print("Entered Email id is invalid. Please enter valid email id")
+                email_id = input("Enter email id: ")
+            else:
+                try:
+                    email_id_object = session.query(Customer).filter(Customer.email_id == email_id).one()
+                    if email_id_object:
+                        print("Email id already exist.")
+                        email_id = input("Enter email id: ")
 
-            password = input("Enter password: ")
-            # getpass("Enter password: ", )
-            confirm_password = input("Enter confirm password: ")
-            # getpass("Enter confirm Password: ")
-            while not password == confirm_password:
-                print("Password and confirm password is not same. Please try again")
+                except NoResultFound:
+                    break
+
+        # TODO: Use getpass module to take hidden password
+        password = input("Enter password: ")
+        # Validate Password
+        while True:
+            validate_pw = validate_password(password)
+            if validate_pw[0]:
+                print(validate_pw[1])
+                break
+            else:
+                print(validate_pw[1])
                 password = input("Enter password: ")
-                confirm_password = input("Enter confirm password: ")
-            mobile_number = input("Enter your mobile number: ")
+
+        confirm_password = input("Enter confirm password: ")
+        while not password == confirm_password:
+            print("Password and confirm password is not same. Please try again")
+            password = input("Enter password: ")
+            confirm_password = input("Enter confirm password: ")
+
+        mobile_number = input("Enter your mobile number: ")
+        # Validate mobile number
+        while True:
+            if not len(mobile_number) == 10:
+                print("Entered mobile number is invalid. Please enter 10 digits mobile number")
+                mobile_number = input("Enter mobile number: ")
+            else:
+                try:
+                    mobile_no_object = session.query(Customer).filter(Customer.mobile_number == mobile_number).one()
+                    if mobile_no_object:
+                        print("Mobile number already exist")
+                        mobile_number = input("Enter your mobile number: ")
+                except NoResultFound:
+                    break
+
         c = Customer()
         c.add_customer(name, email_id, password, mobile_number)
         session.add(c)
         session.commit()
         session.close()
-
-    @staticmethod
-    def edit_user(self):
-        """ User can edit personal information"""
-        pass

@@ -26,19 +26,15 @@ class Product(Base):
         print("Available products are following: ")
         Product.browse_product()
         p_id = input("\nEnter the product id which you what to delete: ")
-        deleted_product = db_session.query(Product).filter(Product.id == p_id).delete()
+        db_session.query(Product).filter(Product.id == p_id).delete()
         db_session.commit()
         db_session.close()
 
     @staticmethod
     def browse_product():
         df = read_sql("SELECT * from product", connect)
-        print(df)
-        """
-        products = db_session.query(Product).all()
-        print("Available Products are: \n")
-        print("ID \t Name \t\t Price \t\t Available Quantity")
-        for p in products:
-            print(p.id, " \t ", p.name, " \t\t ", p.price, " \t\t ", p.available_quantity)
-        """
+        if df.empty:
+            print("Products are not available now")
+        else:
+            print(df)
         db_session.close()
