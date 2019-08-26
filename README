@@ -2,7 +2,7 @@ You need to create a console based (Menu-driven) Shopping Cart application using
 
 Specification:
 
-- Database integration: Postgres SQL or Mysql.
+- Database integration: Postgres SQL.
 - User Roles: There are Admin and customer. Admin can enter products and User can browse that products, add to cart and check out them.
 - Readme file:  Where you need to provide steps to setup scripts like how to create virtual env and installation of dependent python packages.
 - Use Opps concepts in required places.
